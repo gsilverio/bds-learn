@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 @Entity
 @Table(name = "tb_offer")
@@ -15,10 +17,12 @@ public class Offer implements Serializable {
     private String edition;
     private Instant startMoment;
     private Instant endMoment;
-
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+    @OneToMany(mappedBy = "offer")
+    private List<Resource> resources = new ArrayList<>();
 
     public Offer(){
 
@@ -70,6 +74,10 @@ public class Offer implements Serializable {
 
     public void setEndMoment(Instant endMoment) {
         this.endMoment = endMoment;
+    }
+
+    public List<Resource> getResources() {
+        return resources;
     }
 
     @Override
